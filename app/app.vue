@@ -42,11 +42,11 @@ const toggleTheme = () => {
   <UApp>
     <UHeader
       :ui="{
-        center: 'flex items-center' // Cambia de 'hidden lg:flex' a 'flex items-center'
+        center: 'flex items-center',
       }"
     >
       <template #left>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1 max-w-fit">
           <NuxtLink to="/"> 
             <AppLogo class="h-8 w-auto" />
           </NuxtLink>
@@ -62,12 +62,13 @@ const toggleTheme = () => {
       </template>
       
       <template #default>
-        <div class="flex items-center gap-2 lg:gap-4">
+        <div class="flex items-center gap-1 lg:gap-2 -ml-4 lg:-ml-8">
           <!-- Link Promociones -->
           <UButton
             to="/offers"
             variant="ghost"
             color="neutral"
+            icon="i-lucide-tag"
             class="hidden lg:inline-flex text-base font-medium"
             size="md"
           >
@@ -79,10 +80,23 @@ const toggleTheme = () => {
             to="/menu"
             variant="ghost"
             color="neutral"
+            icon="i-lucide-menu"
             class="hidden lg:inline-flex text-base font-medium"
             size="md"
           >
             Menú
+          </UButton>
+          
+          <!-- Link Locales -->
+          <UButton
+            to="/places"
+            variant="ghost"
+            color="neutral"
+            icon="i-lucide-map-pin"
+            class="hidden lg:inline-flex text-base font-medium"
+            size="md"
+          >
+            Locales
           </UButton>
           
           <!-- Buscador -->
@@ -128,7 +142,7 @@ const toggleTheme = () => {
               <strong class="number-phone">01419-1919</strong>
             </span>
           </UButton>
-          <!-- Saludo al usuario o botón de iniciar sesión -->
+
           <template v-if="isLoggedIn">
             <span class="text-sm hidden lg:inline">
               <span>Hola,</span>
@@ -163,22 +177,32 @@ const toggleTheme = () => {
         </div>
       </template>
 
-      <!-- Menu móvil (opcional, para cuando #center esté oculto) -->
       <template #body>
         <div class="flex flex-col gap-2 lg:hidden">
           <UButton
             to="/offers"
             variant="ghost"
             color="neutral"
+            icon="i-lucide-tag"
             block
           >
             Promociones
+          </UButton>
+          <UButton
+            to="/places"
+            variant="ghost"
+            color="neutral"
+            icon="i-lucide-map-pin"
+            block
+          >
+            Locales
           </UButton>
           
           <UButton
             to="/menu"
             variant="ghost"
             color="neutral"
+            icon="i-lucide-menu"
             block
           >
             Menú
