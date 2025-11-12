@@ -81,7 +81,7 @@ const toggleTheme = () => {
             to="/menu"
             variant="ghost"
             color="neutral"
-            icon="i-lucide-menu"
+            icon="ic:outline-fastfood"
             class="hidden lg:inline-flex text-base font-medium"
             size="md"
           >
@@ -226,7 +226,7 @@ const toggleTheme = () => {
             to="/menu"
             variant="ghost"
             color="neutral"
-            icon="i-lucide-menu"
+            icon="ic:outline-fastfood"
             block
           >
             Menú
@@ -247,7 +247,7 @@ const toggleTheme = () => {
                   aria-hidden="true"
                 />
                 <span class="hidden sm:inline">Iniciar sesión</span>
-                <span class="inline-block sm:hidden uppercase tracking-wide text-xs font-semibold">Iniciar</span>
+                <span class="inline-block sm:hidden  tracking-wide text-xs font-semibold">Iniciar sesión</span>
               </UButton>
             </div>
           </template>
@@ -268,8 +268,123 @@ const toggleTheme = () => {
 
     <UFooter>
       <template #left>
-        <div class="flex flex-col items-start gap-2">
+        <div class="flex flex-col items-start gap-3">
           <AppLogo class="h-8 w-auto" />
+
+          <!-- Social links debajo del logo -->
+          <div class="mt-1">
+            <div class="text-sm font-semibold">
+              Síguenos en
+            </div>
+            <ul class="flex items-center gap-3 mt-2">
+              <li>
+                <a
+                  class="text-neutral-700 hover:text-blue-600"
+                  aria-label="Bembos Oficial Facebook"
+                  href="https://www.facebook.com/bembos/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <!-- Facebook SVG -->
+                  <svg
+                    class="h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path d="M22 12C22 6.477 17.523 2 12 2S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.99H7.898v-2.888h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.242 0-1.63.771-1.63 1.562v1.875h2.773l-.443 2.888h-2.33v6.99C18.343 21.128 22 16.991 22 12z" />
+                  </svg>
+                </a>
+              </li>
+
+              <li>
+                <a
+                  class="text-neutral-700 hover:text-red-600"
+                  aria-label="Bembos Oficial Youtube"
+                  href="https://www.youtube.com/user/BembosCanal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <!-- YouTube SVG -->
+                  <svg
+                    class="h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path d="M23.498 6.186a2.996 2.996 0 0 0-2.106-2.12C19.65 3.5 12 3.5 12 3.5s-7.65 0-9.392.566A2.996 2.996 0 0 0 .502 6.186 31.54 31.54 0 0 0 0 12a31.54 31.54 0 0 0 .502 5.814 2.996 2.996 0 0 0 2.106 2.12C4.35 20.5 12 20.5 12 20.5s7.65 0 9.392-.566a2.996 2.996 0 0 0 2.106-2.12A31.54 31.54 0 0 0 24 12a31.54 31.54 0 0 0-.502-5.814zM9.75 15.02V8.98L15.5 12l-5.75 3.02z" />
+                  </svg>
+                </a>
+              </li>
+
+              <li>
+                <a
+                  class="text-neutral-700 hover:text-sky-500"
+                  aria-label="Bembos Oficial Twitter"
+                  href="https://twitter.com/BembosOficial"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <!-- Twitter SVG -->
+                  <svg
+                    class="h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path d="M22.162 5.656c-.63.28-1.305.47-2.016.556a3.517 3.517 0 0 0 1.543-1.94 7.044 7.044 0 0 1-2.229.852 3.513 3.513 0 0 0-5.98 3.203A9.973 9.973 0 0 1 3.11 4.9a3.513 3.513 0 0 0 1.087 4.69 3.49 3.49 0 0 1-1.592-.44v.044a3.513 3.513 0 0 0 2.818 3.444 3.53 3.53 0 0 1-.922.123c-.225 0-.445-.022-.66-.063a3.514 3.514 0 0 0 3.278 2.435A7.045 7.045 0 0 1 2 18.407 9.946 9.946 0 0 0 7.29 20c6.035 0 9.342-5 9.342-9.342 0-.142-.003-.284-.01-.425a6.67 6.67 0 0 0 1.63-1.497l.01-.01z" />
+                  </svg>
+                </a>
+              </li>
+
+              <li>
+                <a
+                  class="text-neutral-700 hover:text-pink-600"
+                  aria-label="Bembos Oficial Instagram"
+                  href="https://www.instagram.com/bembosoficial"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <!-- Instagram SVG -->
+                  <svg
+                    class="h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      x="2"
+                      y="2"
+                      width="20"
+                      height="20"
+                      rx="5"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    />
+                    <path
+                      d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M17.5 6.5h.01"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
           <p class="text-sm text-muted">
             Lazheart Bemmbos • © {{ new Date().getFullYear() }}
           </p>
