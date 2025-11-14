@@ -11,6 +11,13 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  runtimeConfig: {
+    public: {
+      // Use environment variables to set the API base URL. Update these in your .env or deployment.
+      apiAuthBase: process.env.NUXT_PUBLIC_API_AUTH_BASE || process.env.VITE_API_AUTH_BASE || ''
+    }
+  },
+
   routeRules: {
     '/': { prerender: true }
   },

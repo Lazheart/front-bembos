@@ -1,0 +1,22 @@
+AuthApi
+
+post /auth/login
+post /auth/register
+
+RestaurantApi
+
+get   /kitchen/orders
+get   /kitchen/orders/{orderId}
+patch /kitchen/orders/{orderId}
+
+
+get /orders/
+post /orders/
+
+get  /orders/{orderId}
+patch /orders/{orderId}
+
+put /orders/delivered
+put /orders/sent
+
+get /{tenatId}/orders
