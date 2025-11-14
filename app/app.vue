@@ -28,7 +28,6 @@ const usuario = ref('Lazheart')
 const carritoTotal = ref(0)
 const mostrarBusqueda = ref(false)
 const busqueda = ref('')
-const isLoggedIn = ref(false) // Estado de autenticación
 
 // Manejo del tema
 const colorMode = useColorMode()
