@@ -2,11 +2,11 @@
 import * as z from 'zod'
 import type { FormSubmitEvent, AuthFormField } from '@nuxt/ui'
 
-import { login } from '../../api/authService'
-
-const toast = useToast()
+declare function useAuth(): { login: (p: Record<string, unknown>) => Promise<unknown>, greeting: string | null }
 
 const DEFAULT_TENANT = 'TENANT#BEMBOS'
+
+const { login, greeting } = useAuth()
 
 const fields: AuthFormField[] = [
   {
@@ -50,7 +50,6 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
   form.tenantId = typeof form.tenantId === 'string' ? form.tenantId : DEFAULT_TENANT
 
   try {
-    // backend expects tenantId and a field named `email` containing either email or username
     const identifier = typeof form.identifier === 'string' ? form.identifier : undefined
     const res = await login({
       tenantId: typeof form.tenantId === 'string' ? form.tenantId : DEFAULT_TENANT,
@@ -58,36 +57,12 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
       password: typeof form.password === 'string' ? form.password : undefined
     })
 
-    // Extract token defensively from response shape
-    let token: string | undefined
-    if (res && typeof res === 'object') {
-      const r = res as Record<string, unknown>
-      if (typeof r.token === 'string') token = r.token
-      else if (r.data && typeof r.data === 'object') {
-        const d = r.data as Record<string, unknown>
-        if (typeof d.token === 'string') token = d.token
-      }
+    // if login succeeded navigate
+    if (res) {
+      navigateTo('/')
     }
-
-    if (token) {
-      // Store token in cookie (client-side). For httpOnly cookie prefer backend Set-Cookie.
-      const authCookie = useCookie('auth_token', {
-        path: '/',
-        sameSite: 'lax',
-        secure: true,
-        maxAge: 60 * 60 // 1 hour
-      })
-      authCookie.value = token
-    }
-
-    toast.add({ title: 'Login successful', description: 'You are now logged in.' })
-    // redirect to home
-    navigateTo('/')
     console.log('Login success', identifier)
   } catch (errUnknown) {
-    const errObj = errUnknown as { body?: { message?: string }, message?: string }
-    const message = errObj.body?.message ?? errObj.message ?? 'Login failed'
-    toast.add({ title: 'Login failed', description: String(message) })
     console.error('Login error', errUnknown)
   }
 }
@@ -95,6 +70,14 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
 
 <template>
   <UPageCard class="w-full max-w-md">
+    <!-- Greeting when user is present -->
+    <UAlert
+      v-if="greeting"
+      :title="greeting"
+      color="primary"
+      class="mb-4"
+    />
+
     <UAuthForm
       :schema="schema"
       title="Login"

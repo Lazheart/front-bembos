@@ -24,7 +24,6 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
-const usuario = ref('Lazheart')
 const carritoTotal = ref(0)
 const mostrarBusqueda = ref(false)
 const busqueda = ref('')
