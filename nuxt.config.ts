@@ -16,8 +16,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      // Use environment variables to set the API base URL. Update these in your .env or deployment.
-      apiAuthBase: process.env.NUXT_PUBLIC_API_AUTH_BASE || ''
+      apiBaseUrl: process.env.API_BASE_URL || ''
     }
   },
 

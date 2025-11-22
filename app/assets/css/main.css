@@ -1,18 +1,126 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-@theme static {
-  --font-sans: 'Public Sans', sans-serif;
+:root {
+  --font-sans: 'Public Sans', 'Montserrat', 'Arial Rounded MT Bold', Arial, sans-serif;
 
-  --color-green-50: #EFFDF5;
-  --color-green-100: #D9FBE8;
-  --color-green-200: #B3F5D1;
-  --color-green-300: #75EDAE;
-  --color-green-400: #00DC82;
-  --color-green-500: #00C16A;
-  --color-green-600: #00A155;
-  --color-green-700: #007F45;
-  --color-green-800: #016538;
-  --color-green-900: #0A5331;
-  --color-green-950: #052E16;
+  /* Bembos-inspired palette */
+  --color-bembos-blue: #1100cf;
+  --color-bembos-blue-dark: #0a0a3c;
+  --color-bembos-red: #ff000f;
+  --color-bembos-yellow: #ffb500;
+  --color-bembos-white: #fff;
+  --color-bembos-dark: #232323;
+  --color-bembos-gray: #f5f5f5;
+
+  /* Light theme (default) */
+  --color-primary: var(--color-bembos-yellow);
+  --color-secondary: var(--color-bembos-red);
+  --color-accent: var(--color-bembos-red);
+  --color-bg: var(--color-bembos-white);
+  --color-surface: var(--color-bembos-gray);
+  --color-text: var(--color-bembos-dark);
+  --color-muted: #bdbdbd;
+  --color-btn: var(--color-bembos-yellow);
+  --color-btn-text: var(--color-bembos-dark);
+  --color-navbar: var(--color-bembos-yellow);
+  --color-navbar-text: var(--color-bembos-red);
+  --color-link: var(--color-bembos-red);
+  --color-link-hover: var(--color-bembos-blue);
+  --transition-theme: background 0.3s, color 0.3s;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root, body {
+    --color-primary: var(--color-bembos-blue-dark);
+    --color-secondary: var(--color-bembos-yellow);
+    --color-accent: var(--color-bembos-red);
+    --color-bg: var(--color-bembos-blue-dark);
+    --color-surface: #181828;
+    --color-text: var(--color-bembos-yellow);
+    --color-muted: #bdbdbd;
+    --color-btn: var(--color-bembos-yellow);
+    --color-btn-text: var(--color-bembos-blue-dark);
+    --color-navbar: var(--color-bembos-blue-dark);
+    --color-navbar-text: var(--color-bembos-yellow);
+    --color-link: var(--color-bembos-yellow);
+    --color-link-hover: var(--color-bembos-red);
+  }
+}
+
+body.theme-dark {
+  --color-primary: var(--color-bembos-blue-dark);
+  --color-secondary: var(--color-bembos-yellow);
+  --color-accent: var(--color-bembos-red);
+  --color-bg: var(--color-bembos-blue-dark);
+  --color-surface: #181828;
+  --color-text: var(--color-bembos-yellow);
+  --color-muted: #bdbdbd;
+  --color-btn: var(--color-bembos-yellow);
+  --color-btn-text: var(--color-bembos-blue-dark);
+  --color-navbar: var(--color-bembos-blue-dark);
+  --color-navbar-text: var(--color-bembos-yellow);
+  --color-link: var(--color-bembos-yellow);
+  --color-link-hover: var(--color-bembos-red);
+}
+
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: var(--transition-theme);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', 'Public Sans', Arial, sans-serif;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.01em;
+}
+
+.btn-primary {
+  background: var(--color-btn);
+  color: var(--color-btn-text);
+  border-radius: 0.5rem;
+  font-weight: 700;
+  padding: 0.75em 2em;
+  box-shadow: 0 2px 8px 0 rgba(17,0,207,0.08);
+  transition: var(--transition-theme);
+}
+.btn-primary:hover {
+  background: var(--color-accent);
+  color: var(--color-bembos-white);
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 16px 0 rgba(17,0,207,0.08);
+  padding: 2em;
+  margin-bottom: 2em;
+  transition: var(--transition-theme);
+}
+
+.navbar {
+  background: var(--color-navbar);
+  color: var(--color-navbar-text);
+  padding: 1em 2em;
+  border-radius: 0 0 1.5em 1.5em;
+  box-shadow: 0 2px 8px 0 rgba(17,0,207,0.08);
+  transition: var(--transition-theme);
+}
+
+.navbar-logo {
+  height: 48px;
+}
+
+.highlight {
+  color: var(--color-secondary);
+  font-weight: 700;
+  transition: var(--transition-theme);
+}
+
+.shadow {
+  box-shadow: 0 2px 16px 0 rgba(17,0,207,0.08);
 }
