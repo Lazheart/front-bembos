@@ -1,42 +1,99 @@
 <template>
-  <div class="menu-list container mx-auto py-8">
-    <h1
-      class="text-3xl font-bold mb-6"
+  <section class="menu-list container mx-auto py-12 space-y-8">
+    <header class="menu-header">
+      <span class="pill">
+        <UIcon name="i-lucide-utensils" />
+        Menú oficial
+      </span>
+      <h1 class="section-title">
+        Nuestro Menú
+      </h1>
+      <p class="section-subtitle">
+        Combina tu hamburguesa favorita con papas crujientes, salsas artesanales y postres helados.
+      </p>
+    </header>
+
+    <Transition
+      name="fade"
+      mode="out-in"
     >
-      Nuestro Menú
-    </h1>
-
-    <div
-      v-if="error"
-      class="mb-4 text-red-500"
-    >
-      {{ error }}
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <DishCard
-        v-for="(dish, idx) in items"
-        :key="String((dish as Record<string, unknown>).id ?? (dish as Record<string, unknown>).slug ?? idx)"
-        :dish="dish"
-        @add="onAdd"
-      />
-    </div>
-
-    <div class="mt-6 flex justify-center">
-      <button
-        v-if="nextKey"
-        class="btn-primary"
-        :disabled="loading"
-        @click="loadMore"
+      <div
+        v-if="error"
+        key="error"
+        class="card is-ghost text-left text-red-500"
+        role="alert"
       >
-        {{ loading ? 'Cargando...' : 'Cargar más' }}
-      </button>
-    </div>
-  </div>
+        <p class="font-semibold">
+          Ups, no pudimos cargar el menú.
+        </p>
+        <p class="text-sm text-(--color-text) mt-1">
+          {{ error }}
+        </p>
+        <button
+          class="btn-primary mt-4"
+          @click="retry"
+        >
+          Reintentar
+        </button>
+      </div>
+
+      <div
+        v-else
+        key="content"
+      >
+        <div
+          v-if="loading && !items.length"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          aria-hidden="true"
+        >
+          <div
+            v-for="placeholder in placeholderCards"
+            :key="placeholder"
+            class="card h-64 animate-pulse bg-(--color-surface-muted)"
+          />
+        </div>
+
+        <div
+          v-else-if="isEmpty"
+          class="card text-center"
+        >
+          <p class="text-lg font-semibold">
+            Aún no tenemos platos disponibles.
+          </p>
+          <p class="text-sm text-(--color-muted) mt-2">
+            Estamos actualizando la carta, vuelve en unos minutos.
+          </p>
+        </div>
+
+        <div
+          v-else
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <DishCard
+            v-for="(dish, idx) in items"
+            :key="String((dish as Record<string, unknown>).id ?? (dish as Record<string, unknown>).slug ?? idx)"
+            :dish="dish"
+            @add="onAdd"
+          />
+        </div>
+
+        <div class="mt-6 flex justify-center">
+          <button
+            v-if="nextKey"
+            class="btn-primary"
+            :disabled="loading"
+            @click="loadMore"
+          >
+            {{ loading ? 'Cargando...' : 'Cargar más' }}
+          </button>
+        </div>
+      </div>
+    </Transition>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import DishCard from './DishCard.vue'
 import { getMenu } from '../api/restaurantService'
 
@@ -47,6 +104,9 @@ const items = ref<Record<string, unknown>[]>([])
 const nextKey = ref<string | null>(null)
 const loading = ref(false)
 const error = ref<string | null>(null)
+const placeholderCards = Array.from({ length: 6 }, (_, idx) => idx)
+
+const isEmpty = computed(() => !loading.value && !error.value && items.value.length === 0)
 
 function extractItems(resp: unknown) {
   if (!resp) return { items: [], nextKey: null }
@@ -93,11 +153,22 @@ function onAdd(dish: Record<string, unknown>) {
   console.log('Agregar al carrito', dish)
 }
 
+function retry() {
+  load(true)
+}
+
 onMounted(() => load(true))
 </script>
 
 <style scoped>
-.menu-list h1 {
-  color: var(--color-primary);
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(6px);
 }
 </style>

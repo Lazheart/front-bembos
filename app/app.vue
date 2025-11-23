@@ -1,9 +1,11 @@
 <script setup>
-import { useTheme } from '~/composables/useTheme'
+const { theme } = useTheme()
+const themeColor = computed(() => theme.value === 'dark' ? '#0d1fb3' : '#ffd600')
 
 useHead({
   meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { name: 'theme-color', content: () => themeColor.value }
   ],
   link: [
     { rel: 'icon', href: 'https://www.bembos.com.pe/media/favicon/stores/9/favicon-bembos.png' }
@@ -29,14 +31,6 @@ useSeoMeta({
 const carritoTotal = ref(0)
 const mostrarBusqueda = ref(false)
 const busqueda = ref('')
-
-// Nuevo manejo de tema con composable propio (persistente y desacoplado de @nuxt/ui)
-const { applyTheme } = useTheme()
-
-// Asegurar que el atributo data-theme se aplique al cargar
-onMounted(() => {
-  applyTheme()
-})
 </script>
 
 <template>
@@ -258,8 +252,6 @@ onMounted(() => {
     <UMain>
       <NuxtPage />
     </UMain>
-
-    <USeparator icon="bx:bolt-circle" />
 
     <UFooter class="bembos-footer">
       <template #left>
