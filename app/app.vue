@@ -1,4 +1,6 @@
 <script setup>
+import { useTheme } from '~/composables/useTheme'
+
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
@@ -28,17 +30,19 @@ const carritoTotal = ref(0)
 const mostrarBusqueda = ref(false)
 const busqueda = ref('')
 
-// Manejo del tema
-const colorMode = useColorMode()
+// Nuevo manejo de tema con composable propio (persistente y desacoplado de @nuxt/ui)
+const { applyTheme } = useTheme()
 
-const toggleTheme = () => {
-  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
-}
+// Asegurar que el atributo data-theme se aplique al cargar
+onMounted(() => {
+  applyTheme()
+})
 </script>
 
 <template>
   <UApp>
     <UHeader
+      class="bembos-header"
       :ui="{
         center: 'flex items-center'
       }"
@@ -48,14 +52,7 @@ const toggleTheme = () => {
           <NuxtLink to="/">
             <AppLogo class="h-8 w-auto" />
           </NuxtLink>
-          <UButton
-            :icon="colorMode.value === 'dark' ? 'i-lucide-sun' : 'i-lucide-moon'"
-            variant="ghost"
-            color="neutral"
-            size="sm"
-            aria-label="Cambiar tema"
-            @click="toggleTheme"
-          />
+          <ThemeToggle />
         </div>
       </template>
 
@@ -264,7 +261,7 @@ const toggleTheme = () => {
 
     <USeparator icon="bx:bolt-circle" />
 
-    <UFooter>
+    <UFooter class="bembos-footer">
       <template #left>
         <div class="flex flex-col items-start gap-3">
           <AppLogo class="h-8 w-auto" />

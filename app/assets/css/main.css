@@ -1,68 +1,60 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/* Base design tokens */
 :root {
   --font-sans: 'Public Sans', 'Montserrat', 'Arial Rounded MT Bold', Arial, sans-serif;
-
-  /* Bembos-inspired palette */
-  --color-bembos-blue: #1100cf;
-  --color-bembos-blue-dark: #0a0a3c;
+  --color-bembos-blue: #1100cf; /* brand blue */
+  --color-bembos-blue-navy: #06062c; /* deep background dark */
+  --color-bembos-blue-dark: #1b23a8; /* dark header shade */
   --color-bembos-red: #ff000f;
   --color-bembos-yellow: #ffb500;
-  --color-bembos-white: #fff;
+  --color-bembos-white: #ffffff;
   --color-bembos-dark: #232323;
   --color-bembos-gray: #f5f5f5;
+  --transition-theme: background-color .35s ease, color .35s ease, border-color .35s ease;
+}
 
-  /* Light theme (default) */
+/* Light Theme: primary amarillo, secondary blanco, tertiary rojo & azul */
+:root[data-theme='light'] {
   --color-primary: var(--color-bembos-yellow);
-  --color-secondary: var(--color-bembos-red);
-  --color-accent: var(--color-bembos-red);
+  --color-secondary: var(--color-bembos-white);
+  --color-tertiary-red: var(--color-bembos-red);
+  --color-tertiary-blue: var(--color-bembos-blue);
   --color-bg: var(--color-bembos-white);
   --color-surface: var(--color-bembos-gray);
   --color-text: var(--color-bembos-dark);
-  --color-muted: #bdbdbd;
+  --color-muted: #7a7a7a;
   --color-btn: var(--color-bembos-yellow);
   --color-btn-text: var(--color-bembos-dark);
-  --color-navbar: var(--color-bembos-yellow);
-  --color-navbar-text: var(--color-bembos-red);
+  --color-navbar: var(--color-bembos-white);
+  --color-navbar-text: var(--color-bembos-blue);
+  --color-navbar-border: var(--color-bembos-yellow);
   --color-link: var(--color-bembos-red);
   --color-link-hover: var(--color-bembos-blue);
-  --transition-theme: background 0.3s, color 0.3s;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root, body {
-    --color-primary: var(--color-bembos-blue-dark);
-    --color-secondary: var(--color-bembos-yellow);
-    --color-accent: var(--color-bembos-red);
-    --color-bg: var(--color-bembos-blue-dark);
-    --color-surface: #181828;
-    --color-text: var(--color-bembos-yellow);
-    --color-muted: #bdbdbd;
-    --color-btn: var(--color-bembos-yellow);
-    --color-btn-text: var(--color-bembos-blue-dark);
-    --color-navbar: var(--color-bembos-blue-dark);
-    --color-navbar-text: var(--color-bembos-yellow);
-    --color-link: var(--color-bembos-yellow);
-    --color-link-hover: var(--color-bembos-red);
-  }
-}
-
-body.theme-dark {
-  --color-primary: var(--color-bembos-blue-dark);
-  --color-secondary: var(--color-bembos-yellow);
-  --color-accent: var(--color-bembos-red);
-  --color-bg: var(--color-bembos-blue-dark);
+/* Dark Theme: primary azul, secondary blanco, tertiary amarillo & rojo */
+:root[data-theme='dark'] {
+  --color-primary: var(--color-bembos-blue); /* headings, emphasis */
+  --color-secondary: var(--color-bembos-white); /* text */
+  --color-tertiary-yellow: var(--color-bembos-yellow);
+  --color-tertiary-red: var(--color-bembos-red);
+  --color-bg: var(--color-bembos-blue-navy);
   --color-surface: #181828;
-  --color-text: var(--color-bembos-yellow);
+  --color-text: var(--color-bembos-white);
   --color-muted: #bdbdbd;
   --color-btn: var(--color-bembos-yellow);
-  --color-btn-text: var(--color-bembos-blue-dark);
+  --color-btn-text: var(--color-bembos-blue-navy);
   --color-navbar: var(--color-bembos-blue-dark);
   --color-navbar-text: var(--color-bembos-yellow);
+  --color-navbar-border: var(--color-bembos-yellow);
   --color-link: var(--color-bembos-yellow);
   --color-link-hover: var(--color-bembos-red);
 }
+
+/* Legacy body classes (applied by composable) */
+/* body.theme-dark / body.theme-light reserved; remove empty rules to satisfy linter */
 
 
 body {
@@ -92,6 +84,10 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-accent);
   color: var(--color-bembos-white);
 }
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-link-hover);
+  outline-offset: 2px;
+}
 
 .card {
   background: var(--color-surface);
@@ -100,6 +96,10 @@ h1, h2, h3, h4, h5, h6 {
   padding: 2em;
   margin-bottom: 2em;
   transition: var(--transition-theme);
+}
+.card:hover {
+  box-shadow: 0 4px 24px 0 rgba(17,0,207,0.18);
+  transform: translateY(-2px);
 }
 
 .navbar {
@@ -116,11 +116,34 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .highlight {
-  color: var(--color-secondary);
+  color: var(--color-tertiary-red);
   font-weight: 700;
   transition: var(--transition-theme);
 }
 
 .shadow {
   box-shadow: 0 2px 16px 0 rgba(17,0,207,0.08);
+}
+
+/* Scoped header/footer brand classes for reliability */
+.bembos-header {
+  background: var(--color-navbar);
+  color: var(--color-navbar-text);
+  border-bottom: 2px solid var(--color-navbar-border);
+}
+.bembos-header a, .bembos-header button, .bembos-header .ui-icon, .bembos-header svg {
+  color: var(--color-navbar-text);
+}
+
+.bembos-footer {
+  background: var(--color-navbar);
+  color: var(--color-navbar-text);
+  border-top: 2px solid var(--color-navbar-border);
+}
+.bembos-footer a, .bembos-footer button, .bembos-footer svg {
+  color: var(--color-navbar-text);
+}
+
+.u-separator, hr {
+  border-color: var(--color-navbar-border);
 }
