@@ -42,9 +42,9 @@ const busqueda = ref('')
       }"
     >
       <template #left>
-        <div class="flex items-center gap-1 max-w-fit">
+        <div class="flex items-center gap-1 sm:gap-2 max-w-fit">
           <NuxtLink to="/">
-            <AppLogo class="h-8 w-auto" />
+            <AppLogo class="h-7 sm:h-8 lg:h-10 w-auto" />
           </NuxtLink>
           <ThemeToggle />
         </div>
@@ -255,15 +255,15 @@ const busqueda = ref('')
 
     <UFooter class="bembos-footer">
       <template #left>
-        <div class="flex flex-col items-start gap-3">
-          <AppLogo class="h-8 w-auto" />
+        <div class="flex flex-col items-start gap-3 sm:items-start max-sm:items-center max-sm:w-full">
+          <AppLogo class="h-8 w-auto sm:h-10" />
 
           <!-- Social links debajo del logo -->
-          <div class="mt-1">
+          <div class="mt-1 max-sm:text-center">
             <div class="text-sm font-semibold">
               Síguenos en
             </div>
-            <ul class="flex items-center gap-3 mt-2">
+            <ul class="flex items-center gap-3 mt-2 max-sm:justify-center">
               <li>
                 <a
                   class="text-neutral-700 hover:text-blue-600"
@@ -372,7 +372,7 @@ const busqueda = ref('')
             </ul>
           </div>
 
-          <p class="text-sm text-muted">
+          <p class="text-sm text-muted max-sm:text-center max-sm:w-full">
             Lazheart Bemmbos • © {{ new Date().getFullYear() }}
           </p>
         </div>
@@ -380,10 +380,10 @@ const busqueda = ref('')
 
       <template #default>
         <div class="pagebuilder-column mt-4 w-full">
-          <div class="footer-column-content flex flex-col gap-3 sm:flex-row sm:gap-6">
-            <div class="libro-de-reclamaciones">
+          <div class="footer-column-content flex flex-col gap-4 sm:flex-row sm:gap-6 sm:justify-center lg:justify-between flex-wrap">
+            <div class="libro-de-reclamaciones max-sm:w-full">
               <div class="title text-center">
-                <span class="block">Libro de Reclamaciones</span>
+                <span class="block text-sm font-semibold">Libro de Reclamaciones</span>
               </div>
               <div class="column-content mt-1">
                 <div class="footer-link-style flex justify-center">
@@ -406,11 +406,11 @@ const busqueda = ref('')
               </div>
             </div>
 
-            <div class="footer-payment">
+            <div class="footer-payment max-sm:w-full">
               <div class="title text-center">
-                <span class="block">Métodos de Pago</span>
+                <span class="block text-sm font-semibold">Métodos de Pago</span>
               </div>
-              <div class="column-content mt-1">
+              <div class="column-content mt-1 flex justify-center">
                 <ul class="links inline-sections">
                   <li>
                     <img
@@ -425,12 +425,12 @@ const busqueda = ref('')
               </div>
             </div>
 
-            <div class="footer-payment apps">
+            <div class="footer-payment apps max-sm:w-full">
               <div class="title text-center">
-                <span class="block">Bembos App</span>
+                <span class="block text-sm font-semibold">Bembos App</span>
               </div>
               <div class="column-content mt-1">
-                <ul class="links inline-sections flex gap-2">
+                <ul class="links inline-sections flex gap-2 justify-center">
                   <li>
                     <img
                       src="https://www.bembos.com.pe/media/wysiwyg/bembos/google-play.png"
