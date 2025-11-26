@@ -18,7 +18,7 @@ const DEFAULT_THEME: ThemeName = 'light'
 
 const palettes: Record<ThemeName, ThemePalette> = {
   light: {
-    primary: '#ffd600',
+    primary: '#EEB72B',
     secondary: '#ffffff',
     tertiaryOne: '#e31837',
     tertiaryTwo: '#0f4cff',
@@ -30,7 +30,7 @@ const palettes: Record<ThemeName, ThemePalette> = {
   dark: {
     primary: '#0000FF',
     secondary: '#ffffff',
-    tertiaryOne: '#ffd600',
+    tertiaryOne: '#EEB72B',
     tertiaryTwo: '#0000FF',
     background: '#05091f',
     surface: '#0f1a3d',

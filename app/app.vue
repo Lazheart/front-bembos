@@ -1,9 +1,10 @@
 <script setup>
 const { theme } = useTheme()
 import logo from '~/assets/media/bembos2.png'
+import AppLogo from '~/components/AppLogo.vue'
 // themeColor controls the browser address-bar / theme meta color.
 // Use the navbar color for each theme so the UI feels consistent when toggling.
-const themeColor = computed(() => theme.value === 'dark' ? '#0000FF' : '#ffd600')
+const themeColor = computed(() => theme.value === 'dark' ? '#0000FF' : '#EEB72B')
 
 useHead({
   meta: [
@@ -47,7 +48,12 @@ const busqueda = ref('')
       <template #left>
         <div class="flex items-center gap-1 max-w-fit">
           <NuxtLink to="/" class="logo-link">
-            <img :src="logo" alt="Bembos 2" class="h-8 w-auto" />
+            <Transition name="logo-fade" mode="out-in">
+              <template #default>
+                <AppLogo v-if="theme === 'light'" key="svg" class="h-12 lg:h-30" />
+                <img v-else key="png" :src="logo" alt="Bembos 2" class="h-12 lg:h-30 w-auto" />
+              </template>
+            </Transition>
           </NuxtLink>
           <ThemeToggle />
         </div>
@@ -262,7 +268,12 @@ const busqueda = ref('')
         <div class="flex flex-col items-start gap-3">
           <div class="footer-logo">
             <NuxtLink to="/" class="logo-link">
-              <img :src="logo" alt="Bembos 2" class="h-8 w-auto" />
+              <Transition name="logo-fade" mode="out-in">
+                <template #default>
+                  <AppLogo v-if="theme === 'light'" key="svg-footer" class="h-12 lg:h-30" />
+                  <img v-else key="png-footer" :src="logo" alt="Bembos 2" class="h-12 lg:h-30 w-auto" />
+                </template>
+              </Transition>
             </NuxtLink>
           </div>
 

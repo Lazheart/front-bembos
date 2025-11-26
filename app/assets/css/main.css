@@ -5,7 +5,7 @@
   color-scheme: light;
   --font-sans: 'Public Sans', 'Montserrat', 'Arial Rounded MT Bold', Arial, sans-serif;
 
-  --color-primary: #ffd600; /* amarillo protagonista */
+  --color-primary: #EEB72B; /* amarillo protagonista */
   --color-secondary: #ffffff; /* blanco para superficies y botones */
   --color-tertiary-1: #e31837; /* rojo vibrante */
   --color-tertiary-2: #0f4cff; /* azul eléctrico (light theme) */
@@ -19,13 +19,13 @@
   --color-card-shadow: 0 18px 50px rgba(17, 0, 207, 0.08);
   /* softer brand blue for navbar in light theme */
   /* light theme: navbar/footer use brand yellow for high contrast */
-  --color-navbar: #ffd600;
+  --color-navbar: #EEB72B;
   --color-navbar-text: #1f1a00;
-  --color-navbar-border: #ffd600;
+  --color-navbar-border: #EEB72B;
   --color-link: #0f4cff;
   --color-link-hover: #e31837;
   --color-cta-text: #1f1a00;
-  --color-hero-grad: radial-gradient(circle at top left, rgba(255, 214, 0, 0.35), transparent 46%), radial-gradient(circle at 80% 10%, rgba(15, 76, 255, 0.2), transparent 40%), linear-gradient(135deg, #fffdf5 0%, #fff7da 50%, #ffffff 100%);
+  --color-hero-grad: radial-gradient(circle at top left, rgba(238, 183, 43, 0.35), transparent 46%), radial-gradient(circle at 80% 10%, rgba(15, 76, 255, 0.2), transparent 40%), linear-gradient(135deg, #fffdf5 0%, #fff7da 50%, #ffffff 100%);
   --transition-theme: background 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
@@ -34,7 +34,7 @@ body.theme-dark {
   color-scheme: dark;
   --color-primary: #0000FF; /* azul profundo protagonista (normalized to brand blue) */
   --color-secondary: #ffffff;
-  --color-tertiary-1: #ffd600; /* amarillo contraste */
+  --color-tertiary-1: #EEB72B; /* amarillo contraste */
   --color-tertiary-2: #ff4d4f; /* rojo intenso */
   --color-bg: #03061a;
   --color-bg-alt: #09133b;
@@ -51,11 +51,11 @@ body.theme-dark {
   --color-primary: #0000FF; /* ensure primary blue in dark uses #0000FF */
   --color-tertiary-2: #0000FF;
   --color-link: #0000FF;
-  --color-navbar-border: #ffd600;
-  --color-link: #ffd600;
+  --color-navbar-border: #EEB72B;
+  --color-link: #EEB72B;
   --color-link-hover: #ff4d4f;
   --color-cta-text: #ffffff;
-  --color-hero-grad: radial-gradient(circle at 10% 20%, rgba(255, 214, 0, 0.15), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255, 78, 79, 0.28), transparent 45%), linear-gradient(135deg, #01030f 0%, #050d25 50%, #0c1d49 100%);
+  --color-hero-grad: radial-gradient(circle at 10% 20%, rgba(238, 183, 43, 0.15), transparent 55%), radial-gradient(circle at 80% 0%, rgba(255, 78, 79, 0.28), transparent 45%), linear-gradient(135deg, #01030f 0%, #050d25 50%, #0c1d49 100%);
 }
 
 body {
@@ -88,7 +88,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 999px;
   font-weight: 700;
   padding: 0.85em 2.25em;
-  box-shadow: 0 14px 30px rgba(255, 214, 0, 0.35);
+  box-shadow: 0 14px 30px rgba(238, 183, 43, 0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
@@ -118,7 +118,8 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-navbar-text);
   border-bottom: 2px solid var(--color-navbar-border);
   border-radius: 0 0 1.5em 1.5em;
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+  /* Softer, less-contrasting shadow to avoid dark edges */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.04);
 }
 
 .bembos-header a,
@@ -128,11 +129,116 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-navbar-text);
 }
 
+/* Responsive header/footer layout to avoid overlapping elements */
+.bembos-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  flex-wrap: wrap;
+}
+
+/* Keep header above other content to avoid visual duplication/overlap */
+.bembos-header {
+  position: relative;
+  z-index: 60;
+}
+
+.bembos-header .logo-link {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+/* Make the center area flexible (search / nav) */
+.bembos-header .u-header__center,
+.bembos-header .header-center,
+.bembos-header .center {
+  flex: 1 1 320px;
+  min-width: 160px;
+  /* ensure center content doesn't overflow the header */
+  overflow: visible;
+}
+
+.bembos-header .u-header__right,
+.bembos-header .header-right,
+.bembos-header .right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Responsive footer columns */
+.bembos-footer .footer-column-content {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.bembos-footer .footer-column-content > div {
+  flex: 1 1 220px;
+  min-width: 180px;
+}
+
+/* Limit logo max size on small screens to avoid pushing content */
+.logo-link img,
+.footer-logo img,
+.bembos-header svg,
+.bembos-footer svg {
+  max-height: 4.5rem;
+  height: auto;
+  display: block;
+}
+
+/* Hide some text on very small screens to prevent wrapping */
+@media (max-width: 640px) {
+  .bembos-header .number-phone,
+  .bembos-header .number-phone strong,
+  .bembos-header .uppercase {
+    display: none;
+  }
+
+  .bembos-header {
+    padding: 0.5rem;
+  }
+}
+
+/* Ensure mobile menu (.slide-down) is hidden on larger screens even if classes conflict */
+.bembos-header .slide-down {
+  display: none !important;
+}
+
+@media (max-width: 1024px) {
+  .bembos-header .slide-down {
+    display: flex !important;
+  }
+}
+
+/* Push main content down to avoid header overlap when header is tall */
+header + main,
+.u-header + .u-main,
+.u-header + #__nuxt {
+  margin-top: 4.25rem; /* approx header height */
+}
+
+/* Logo fade transition when switching theme */
+.logo-fade-enter-active,
+.logo-fade-leave-active {
+  transition: opacity 220ms ease;
+}
+.logo-fade-enter-from,
+.logo-fade-leave-to {
+  opacity: 0;
+}
+
 .bembos-footer {
   background: var(--color-navbar);
   color: var(--color-navbar-text);
   border-top: 2px solid var(--color-navbar-border);
-  box-shadow: 0 -12px 25px rgba(0, 0, 0, 0.08);
+  /* Softer footer shadow to avoid dark lateral artifacts */
+  box-shadow: 0 -12px 25px rgba(0, 0, 0, 0.04);
 }
 
 .bembos-footer a,
@@ -210,7 +316,7 @@ body.theme-dark .hero-stat {
 }
 
 .menu-wrapper {
-  background: radial-gradient(circle at top, rgba(255, 214, 0, 0.15), transparent 65%), var(--color-bg);
+  background: radial-gradient(circle at top, rgba(238, 183, 43, 0.15), transparent 65%), var(--color-bg);
   padding-bottom: 4rem;
 }
 
@@ -450,7 +556,7 @@ body.theme-dark .auth-card .i-lucide-check svg {
 /* Light theme: warm yellowish overlay for brand aesthetic */
 body:not(.theme-dark) .auth-page::before,
 :root:not([data-theme='dark']) .auth-page::before {
-  background: linear-gradient(180deg, rgba(255,214,0,0.26) 0%, rgba(255,214,0,0.16) 35%, rgba(0,0,0,0.14) 100%);
+  background: linear-gradient(180deg, rgba(238,183,43,0.26) 0%, rgba(238,183,43,0.16) 35%, rgba(0,0,0,0.14) 100%);
 }
 
 /* Dark theme: subtle blue overlay to match dark palette */
