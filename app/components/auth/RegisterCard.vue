@@ -106,7 +106,7 @@ const onSubmit = async (payload?: FormSubmitEvent<Schema>): Promise<void> => {
 </script>
 
 <template>
-  <UPageCard class="w-full max-w-md">
+  <UPageCard class="w-full max-w-md card auth-card">
     <UAuthForm
       :schema="schema"
       title="Create account"

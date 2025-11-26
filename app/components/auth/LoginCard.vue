@@ -66,6 +66,11 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
       else payload.username = identifier.toLowerCase()
     }
 
+    // Respect "remember" checkbox: pass it through to the auth composable
+    if ('remember' in form) {
+      payload.remember = Boolean((form as Record<string, unknown>).remember)
+    }
+
     const res = await login(payload)
 
     // if login succeeded navigate
@@ -80,7 +85,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UPageCard class="w-full max-w-md">
+  <UPageCard class="w-full max-w-md card auth-card">
     <!-- Greeting when user is present -->
     <UAlert
       v-if="greeting"

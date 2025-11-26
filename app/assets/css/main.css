@@ -262,3 +262,44 @@ body.theme-dark .hero-stat {
   font-size: 1.1rem;
   color: var(--color-muted);
 }
+
+/* Auth UI custom styles */
+.auth-card {
+  background: var(--color-surface);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 12px 30px rgba(2,4,24,0.06);
+}
+
+.auth-toggle {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+  position: relative;
+  padding: 0.25rem;
+}
+
+.auth-toggle-thumb {
+  transition: transform 0.18s ease, background-color 0.18s ease;
+  will-change: transform;
+}
+
+/* Checkbox accent and subtle animation */
+input[type='checkbox'] {
+  accent-color: var(--color-primary);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+input[type='checkbox']:focus {
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+  outline-offset: 3px;
+}
+
+/* Prefer reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .auth-toggle-thumb,
+  input[type='checkbox'] {
+    transition: none !important;
+  }
+}
