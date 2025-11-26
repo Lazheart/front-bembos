@@ -6,6 +6,8 @@ import { register } from '../../api/authService'
 
 const toast = useToast()
 
+const rememberMe = ref(false)
+
 const fields: AuthFormField[] = [
   {
     name: 'email',
@@ -34,11 +36,6 @@ const fields: AuthFormField[] = [
     label: 'Confirm password',
     placeholder: 'Confirm your password',
     required: true
-  },
-  {
-    name: 'remember',
-    type: 'checkbox',
-    label: 'Remember me'
   }
 ]
 
@@ -106,7 +103,7 @@ const onSubmit = async (payload?: FormSubmitEvent<Schema>): Promise<void> => {
 </script>
 
 <template>
-  <UPageCard class="w-full max-w-md">
+  <UPageCard class="auth-card w-full max-w-md">
     <UAuthForm
       :schema="schema"
       title="Create account"
@@ -114,6 +111,120 @@ const onSubmit = async (payload?: FormSubmitEvent<Schema>): Promise<void> => {
       icon="i-lucide-user-plus"
       :fields="fields"
       @submit="onSubmit"
-    />
+    >
+      <template #footer>
+        <div class="remember-toggle-container">
+          <label class="remember-toggle">
+            <span class="remember-toggle__label">Remember me</span>
+            <button
+              type="button"
+              class="remember-toggle__switch"
+              :class="{ 'remember-toggle__switch--active': rememberMe }"
+              role="switch"
+              :aria-checked="rememberMe"
+              @click="rememberMe = !rememberMe"
+            >
+              <span class="remember-toggle__thumb" />
+            </button>
+          </label>
+        </div>
+        <UButton
+          type="submit"
+          block
+          class="auth-submit-btn"
+        >
+          Create account
+        </UButton>
+      </template>
+    </UAuthForm>
   </UPageCard>
 </template>
+
+<style scoped>
+.auth-card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-navbar-border);
+  border-radius: 1.5rem;
+  box-shadow: var(--color-card-shadow);
+  padding: 2rem;
+}
+
+.auth-card :deep(.u-auth-form__title),
+.auth-card :deep(h2) {
+  color: var(--color-tertiary-1);
+  font-weight: 700;
+}
+
+.auth-card :deep(.u-auth-form__description) {
+  color: var(--color-muted);
+}
+
+.auth-submit-btn {
+  background: linear-gradient(135deg, var(--color-tertiary-1) 0%, var(--color-primary) 100%);
+  color: var(--color-cta-text);
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 0.85em 2em;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-tertiary-1) 30%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  margin-top: 1rem;
+}
+
+.auth-submit-btn:hover {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-tertiary-2) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--color-tertiary-2) 35%, transparent);
+}
+
+.remember-toggle-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.remember-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.remember-toggle__label {
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.remember-toggle__switch {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--color-border);
+  border: 2px solid var(--color-muted);
+  transition: background 0.25s ease, border-color 0.25s ease;
+  padding: 0;
+  cursor: pointer;
+}
+
+.remember-toggle__switch--active {
+  background: linear-gradient(90deg, var(--color-tertiary-1), var(--color-primary));
+  border-color: var(--color-primary);
+}
+
+.remember-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s ease;
+}
+
+.remember-toggle__switch--active .remember-toggle__thumb {
+  transform: translateX(22px);
+}
+</style>
