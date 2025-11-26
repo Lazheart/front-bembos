@@ -262,3 +262,86 @@ body.theme-dark .hero-stat {
   font-size: 1.1rem;
   color: var(--color-muted);
 }
+
+/* ========================================
+   RESPONSIVE STYLES FOR NAVBAR AND FOOTER
+   ======================================== */
+
+/* Mobile-first responsive header styles */
+@media (max-width: 767px) {
+  .bembos-header {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0 0 1rem 1rem;
+  }
+
+  .bembos-header .number-phone {
+    font-size: 0.75rem;
+  }
+
+  /* Footer responsive adjustments for mobile */
+  .bembos-footer {
+    padding: 1.5rem 1rem;
+  }
+
+  .bembos-footer .footer-column-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .bembos-footer .libro-de-reclamaciones,
+  .bembos-footer .footer-payment {
+    width: 100%;
+  }
+}
+
+/* Tablet responsive styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .bembos-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .bembos-footer .footer-column-content {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+  .bembos-header {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .bembos-footer {
+    padding: 2rem 1.5rem;
+  }
+
+  .bembos-footer .footer-column-content {
+    justify-content: space-between;
+  }
+}
+
+/* Theme toggle responsive size adjustments for very small screens */
+@media (max-width: 480px) {
+  .theme-toggle {
+    width: 52px;
+    height: 26px;
+  }
+
+  .theme-toggle__thumb {
+    width: 20px;
+    height: 20px;
+    transform: translateX(3px);
+  }
+
+  .theme-toggle__thumb--dark {
+    transform: translateX(27px);
+  }
+
+  .theme-toggle__icon {
+    padding: 0 6px;
+  }
+}
