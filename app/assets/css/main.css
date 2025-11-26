@@ -324,7 +324,7 @@ body.theme-dark .hero-stat {
   }
 }
 
-/* Theme toggle responsive size adjustments */
+/* Theme toggle responsive size adjustments for very small screens */
 @media (max-width: 480px) {
   .theme-toggle {
     width: 52px;
