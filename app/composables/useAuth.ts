@@ -43,6 +43,15 @@ export const useAuth = () => {
   const name = computed(() => getUserName(user.value))
   const greeting = computed(() => (name.value ? `Hola ${name.value}` : null))
 
+  const isLoggedIn = computed(() => Boolean(token.value || user.value))
+  const usuario = computed(() => {
+    if (name.value) return name.value as string
+    if (user.value && typeof (user.value as any).username === 'string') return (user.value as any).username
+    if (user.value && typeof (user.value as any).name === 'string') return (user.value as any).name
+    if (user.value && typeof (user.value as any).email === 'string') return (user.value as any).email
+    return ''
+  })
+
   const login = async (payload: Record<string, unknown>) => {
     loading.value = true
     error.value = null
@@ -146,6 +155,8 @@ export const useAuth = () => {
     error,
     name,
     greeting,
+    isLoggedIn,
+    usuario,
     login,
     logout
   }

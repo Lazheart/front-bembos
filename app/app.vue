@@ -1,5 +1,7 @@
 <script setup>
 const { theme } = useTheme()
+import { useAuth } from '~/composables/useAuth'
+const { isLoggedIn, usuario } = useAuth()
 import logo from '~/assets/media/bembos2.png'
 import AppLogo from '~/components/AppLogo.vue'
 // themeColor controls the browser address-bar / theme meta color.
