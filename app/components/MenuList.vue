@@ -94,6 +94,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { useCart } from '~/composables/useCart'
 import DishCard from './DishCard.vue'
 import { getMenu } from '../api/restaurantService'
 
@@ -149,8 +150,14 @@ function loadMore() {
 }
 
 function onAdd(dish: Record<string, unknown>) {
-  // Placeholder: implement add-to-cart later
-  console.log('Agregar al carrito', dish)
+  try {
+    const { addItem } = useCart()
+    addItem(dish, 1)
+    const toast = useToast()
+    toast.add({ title: 'Agregado', description: String(dish.name ?? 'Plato agregado'), color: 'success' })
+  } catch (e) {
+    console.error('Error agregando al carrito', e)
+  }
 }
 
 function retry() {

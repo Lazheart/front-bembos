@@ -6,6 +6,7 @@ const { isLoggedIn, usuario, logout } = useAuth()
 
 const userMenuOpen = ref(false)
 const userMenuRef = ref(null)
+const cartRef = ref(null)
 
 function toggleUserMenu() {
   userMenuOpen.value = !userMenuOpen.value
@@ -17,9 +18,10 @@ function handleLogout() {
 }
 
 function onDocClick(e) {
-  const el = userMenuRef.value
-  if (!el) return
-  if (!el.contains(e.target)) userMenuOpen.value = false
+  const um = userMenuRef.value
+  const cr = cartRef.value
+  if (um && !um.contains(e.target)) userMenuOpen.value = false
+  if (cr && !cr.contains(e.target)) cartOpen.value = false
 }
 
 onMounted(() => {
@@ -61,7 +63,9 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
-const carritoTotal = ref(0)
+import { useCart } from '~/composables/useCart'
+const { cart, total: carritoTotal, count: carritoCount, removeItem } = useCart()
+const cartOpen = ref(false)
 const mostrarBusqueda = ref(false)
 const busqueda = ref('')
 </script>
@@ -221,18 +225,43 @@ const busqueda = ref('')
           </template>
 
           <!-- Carrito de compras -->
-          <UButton
-            icon="i-lucide-shopping-cart"
-            variant="ghost"
-            color="neutral"
-            size="sm"
-            aria-label="Carrito"
-            class="min-w-16"
-          >
-            <span class="hidden sm:inline ml-2 text-sm whitespace-nowrap">
-              S/ {{ carritoTotal.toFixed(2) }}
-            </span>
-          </UButton>
+          <div class="relative" ref="cartRef">
+            <button
+              @click="cartOpen = !cartOpen"
+              class="inline-flex items-center gap-2"
+              aria-haspopup="true"
+              :aria-expanded="cartOpen"
+            >
+              <UIcon name="i-lucide-shopping-cart" class="h-5 w-5" />
+              <span class="hidden sm:inline ml-2 text-sm whitespace-nowrap">S/ {{ carritoTotal.toFixed(2) }}</span>
+              <span v-if="carritoCount" class="ml-1 text-xs font-semibold bg-(--color-primary) text-white rounded-full px-2">{{ carritoCount }}</span>
+            </button>
+
+            <transition name="fade">
+              <div
+                v-show="cartOpen"
+                class="absolute right-0 mt-2 w-80 bg-white dark:bg-neutral-800 text-sm rounded-md shadow-lg ring-1 ring-black/5 z-50 p-3"
+              >
+                <div v-if="!cart.length" class="text-center text-(--color-muted)">Tu carrito está vacío</div>
+                <ul v-else class="space-y-2 max-h-56 overflow-auto">
+                  <li v-for="item in cart" :key="item.id" class="flex items-center justify-between gap-2">
+                    <div class="flex-1">
+                      <div class="font-semibold">{{ item.name }}</div>
+                      <div class="text-xs text-(--color-muted)">x{{ item.qty }} · S/ {{ (Number(item.price) * Number(item.qty)).toFixed(2) }}</div>
+                    </div>
+                    <button @click="removeItem(item.id)" class="text-xs text-red-500">Quitar</button>
+                  </li>
+                </ul>
+                <div class="mt-3 flex items-center justify-between">
+                  <div class="text-sm">Total</div>
+                  <div class="text-lg font-bold">S/ {{ carritoTotal.toFixed(2) }}</div>
+                </div>
+                <div class="mt-3">
+                  <NuxtLink to="/order" class="btn-primary w-full" @click.native="cartOpen = false">Hacer pedido</NuxtLink>
+                </div>
+              </div>
+            </transition>
+          </div>
         </div>
       </template>
 
