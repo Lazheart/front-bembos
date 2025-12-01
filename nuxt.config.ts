@@ -38,4 +38,5 @@ export default defineNuxtConfig({
       }
     }
   }
+// eslint-disable-next-line @stylistic/eol-last
 })

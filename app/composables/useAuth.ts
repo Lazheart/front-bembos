@@ -26,7 +26,11 @@ export const useAuth = () => {
   }
 
   if (cookieUser.value && !user.value) {
-    user.value = cookieUser.value as unknown as Record<string, unknown>
+    try {
+      user.value = typeof cookieUser.value === 'string' ? JSON.parse(cookieUser.value) : (cookieUser.value as unknown as Record<string, unknown>)
+    } catch (e) {
+      user.value = cookieUser.value as unknown as Record<string, unknown>
+    }
   }
 
   const cookieToken = useCookie('auth_token')
@@ -97,6 +101,19 @@ export const useAuth = () => {
           if (d.user && typeof d.user === 'object') u = d.user as Record<string, unknown>
           else u = d as Record<string, unknown>
         }
+        // Handle flat responses where API returns user fields at top-level
+        // e.g. { token, userId, role, username, email }
+        if (!u) {
+          const hasUserFields = ('username' in r) || ('email' in r) || ('userId' in r) || ('role' in r)
+          if (hasUserFields) {
+            const flatUser: Record<string, unknown> = {}
+            if ('userId' in r) flatUser.userId = r.userId
+            if ('role' in r) flatUser.role = r.role
+            if ('username' in r) flatUser.username = r.username
+            if ('email' in r) flatUser.email = r.email
+            u = flatUser
+          }
+        }
       }
 
       if (u) {
@@ -115,7 +132,8 @@ export const useAuth = () => {
             secure: true,
             maxAge: 60 * 60 * 24 * 7 // 7 days
           })
-          userCookie.value = JSON.stringify(u)
+          // store the object directly so Nuxt cookie utilities can serialize/deserialize
+          userCookie.value = u
         }
       }
 

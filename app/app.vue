@@ -1,7 +1,10 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useCart } from '~/composables/useCart'
+import logo from '~/assets/media/bembos2.png'
+import AppLogo from '~/components/AppLogo.vue'
+
 const { theme } = useTheme()
-import { useAuth } from '~/composables/useAuth'
 const { isLoggedIn, usuario, logout } = useAuth()
 
 const userMenuOpen = ref(false)
@@ -31,10 +34,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener('click', onDocClick)
 })
-import logo from '~/assets/media/bembos2.png'
-import AppLogo from '~/components/AppLogo.vue'
-// themeColor controls the browser address-bar / theme meta color.
-// Use the navbar color for each theme so the UI feels consistent when toggling.
+
 const themeColor = computed(() => theme.value === 'dark' ? '#0000FF' : '#EEB72B')
 
 useHead({
@@ -63,7 +63,6 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
-import { useCart } from '~/composables/useCart'
 const { cart, total: carritoTotal, count: carritoCount, removeItem } = useCart()
 const cartOpen = ref(false)
 const mostrarBusqueda = ref(false)
@@ -201,7 +200,9 @@ const busqueda = ref('')
                 >
                   <NuxtLink to="/order" class="block px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-700">Mis Pedidos</NuxtLink>
                   <NuxtLink to="/me" class="block px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-700">Mi cuenta</NuxtLink>
-                  <button @click="handleLogout" class="w-full text-left px-4 py-2 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-600">Cerrar sesión</button>
+                  <button @click="handleLogout" class="w-full text-left px-4 py-2 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-600">
+                    Cerrar sesión
+                  </button>
                 </div>
               </transition>
             </div>
@@ -242,22 +243,34 @@ const busqueda = ref('')
                 v-show="cartOpen"
                 class="absolute right-0 mt-2 w-80 bg-white dark:bg-neutral-800 text-sm rounded-md shadow-lg ring-1 ring-black/5 z-50 p-3"
               >
-                <div v-if="!cart.length" class="text-center text-(--color-muted)">Tu carrito está vacío</div>
+                <div v-if="!cart.length" class="text-center text-(--color-muted)">
+                  Tu carrito está vacío
+                </div>
                 <ul v-else class="space-y-2 max-h-56 overflow-auto">
                   <li v-for="item in cart" :key="item.id" class="flex items-center justify-between gap-2">
                     <div class="flex-1">
-                      <div class="font-semibold">{{ item.name }}</div>
-                      <div class="text-xs text-(--color-muted)">x{{ item.qty }} · S/ {{ (Number(item.price) * Number(item.qty)).toFixed(2) }}</div>
+                      <div class="font-semibold">
+                        {{ item.name }}
+                      </div>
+                      <div class="text-xs text-(--color-muted)">
+                        x{{ item.qty }} · S/ {{ (Number(item.price) * Number(item.qty)).toFixed(2) }}
+                      </div>
                     </div>
-                    <button @click="removeItem(item.id)" class="text-xs text-red-500">Quitar</button>
+                    <button @click="removeItem(item.id)" class="text-xs text-red-500">
+                      Quitar
+                    </button>
                   </li>
                 </ul>
                 <div class="mt-3 flex items-center justify-between">
-                  <div class="text-sm">Total</div>
-                  <div class="text-lg font-bold">S/ {{ carritoTotal.toFixed(2) }}</div>
+                  <div class="text-sm">
+                    Total
+                  </div>
+                  <div class="text-lg font-bold">
+                    S/ {{ carritoTotal.toFixed(2) }}
+                  </div>
                 </div>
                 <div class="mt-3">
-                  <NuxtLink to="/order" class="btn-primary w-full" @click.native="cartOpen = false">Hacer pedido</NuxtLink>
+                  <NuxtLink to="/order" class="btn-primary w-full" v-on:click="cartOpen = false">Hacer pedido</NuxtLink>
                 </div>
               </div>
             </transition>
@@ -332,7 +345,12 @@ const busqueda = ref('')
             <div class="px-3 py-2 text-sm flex flex-col gap-2">
               <NuxtLink to="/order" class="block px-3 py-2 rounded hover:bg-neutral-100">Mis Pedidos</NuxtLink>
               <NuxtLink to="/me" class="block px-3 py-2 rounded hover:bg-neutral-100">Mi cuenta</NuxtLink>
-              <button @click="handleLogout" class="w-full text-left px-3 py-2 rounded bg-red-50 text-red-600 hover:bg-red-100">Cerrar sesión</button>
+              <button
+                @click="handleLogout"
+                class="w-full text-left px-3 py-2 rounded bg-red-50 text-red-600 hover:bg-red-100"
+              >
+                Cerrar sesión
+              </button>
             </div>
           </template>
         </div>
@@ -345,7 +363,6 @@ const busqueda = ref('')
 
     <UFooter class="bembos-footer">
       <template #left>
-
         <div class="flex flex-col items-start gap-3">
           <div class="footer-logo">
             <NuxtLink to="/" class="logo-link">
