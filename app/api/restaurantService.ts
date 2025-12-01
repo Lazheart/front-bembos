@@ -22,8 +22,11 @@ export async function upsertDish(payload: Record<string, unknown>) {
 }
 
 // --- KITCHENS ---
-export async function getKitchens(tenantId: string) {
-  const url = `${getBaseUrl()}/kitchens?tenantId=${encodeURIComponent(tenantId)}`
+export async function getKitchens(tenantId: string, limit?: number, lastKey?: string) {
+  const params = new URLSearchParams({ tenantId })
+  if (typeof limit === 'number') params.set('limit', String(limit))
+  if (typeof lastKey === 'string' && lastKey.length) params.set('lastKey', lastKey)
+  const url = `${getBaseUrl()}/kitchens?${params.toString()}`
   return await $fetch(url)
 }
 
