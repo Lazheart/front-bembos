@@ -424,8 +424,9 @@ input[type='checkbox']:focus {
   width: 1.05rem;
   height: 1.05rem;
   border-radius: 0.25rem;
-  border: 2px solid color-mix(in srgb, var(--color-muted) 36%, transparent);
-  background: var(--color-surface);
+  border: 2px solid color-mix(in srgb, var(--color-muted) 60%, #000 40%);
+  /* Slight translucency so the checkbox keeps the soft overlay effect */
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent 12%);
   display: inline-grid;
   place-items: center;
   transition: background 0.14s ease, border-color 0.14s ease, transform 0.12s ease;
@@ -449,8 +450,11 @@ input[type='checkbox']:focus {
 }
 
 .auth-card input[type='checkbox']:checked {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
+  /* Do not fill the checkbox — keep translucent surface and only show the checkmark */
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent 12%);
+  /* keep the same border so it doesn't become a filled block */
+  border-color: color-mix(in srgb, var(--color-muted) 60%, #000 40%);
+  box-shadow: none;
 }
 
 .auth-card input[type='checkbox']:checked::after {
@@ -499,6 +503,67 @@ body.theme-dark .auth-card .i-lucide-check svg {
 }
 
 .auth-card input[type='checkbox']:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 14%, transparent);
+}
+
+/* Buttons used as accessible checkboxes (Nuxt UI renders a button with role=checkbox)
+   Mirror the custom checkbox styles so the visible button shows a check in light mode */
+.auth-card button[role="checkbox"] {
+  display: inline-grid;
+  place-items: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 0.25rem;
+  border: 2px solid color-mix(in srgb, var(--color-muted) 60%, #000 40%);
+  /* Keep a subtle translucent surface so it reads as an overlay on the card */
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent 12%);
+  padding: 0;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  transition: background 0.14s ease, border-color 0.14s ease, box-shadow 0.12s ease, transform 0.12s ease;
+  position: relative;
+  vertical-align: middle;
+}
+
+.auth-card button[role="checkbox"]::after {
+  content: '';
+  display: block;
+  width: 0.7rem;
+  height: 0.7rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70% 70%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6L9 17l-5-5'/></svg>");
+  transform: scale(0);
+  transition: transform 0.12s ease, opacity 0.12s ease;
+  opacity: 0;
+  box-sizing: content-box;
+  color: var(--color-cta-text);
+}
+
+.auth-card button[role="checkbox"][aria-checked="true"] {
+  /* Keep the button visually consistent with the input checkbox: no filled yellow block */
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent 12%);
+  border-color: color-mix(in srgb, var(--color-muted) 60%, #000 40%);
+  box-shadow: none;
+}
+
+.auth-card button[role="checkbox"][aria-checked="true"]::after {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Theme-specific check stroke color for the button variant */
+body:not(.theme-dark) .auth-card button[role="checkbox"]::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6L9 17l-5-5'/></svg>") !important;
+}
+
+body.theme-dark .auth-card button[role="checkbox"]::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6L9 17l-5-5'/></svg>") !important;
+}
+
+.auth-card button[role="checkbox"]:focus-visible {
   outline: none;
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 14%, transparent);
 }

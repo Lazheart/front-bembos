@@ -3,6 +3,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useCart } from '~/composables/useCart'
 import logo from '~/assets/media/bembos2.png'
 import AppLogo from '~/components/AppLogo.vue'
+import Ubication from '~/components/Ubication.vue'
 
 const { theme } = useTheme()
 const { isLoggedIn, usuario, logout } = useAuth()
@@ -123,7 +124,7 @@ const busqueda = ref('')
             to="/places"
             variant="ghost"
             color="neutral"
-            icon="i-lucide-map-pin"
+            icon="tdesign:store"
             class="hidden lg:inline-flex text-base font-medium"
             size="md"
           >
@@ -356,6 +357,11 @@ const busqueda = ref('')
         </div>
       </template>
     </UHeader>
+
+    <!-- Ubication: visible under the navbar on all pages -->
+    <div class="px-4 mt-3">
+      <Ubication />
+    </div>
 
     <UMain>
       <NuxtPage />
