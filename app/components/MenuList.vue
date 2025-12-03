@@ -3,13 +3,13 @@
     <header class="menu-header">
       <span class="pill">
         <UIcon name="i-lucide-utensils" />
-        Menú oficial
+        {{ pillText }}
       </span>
       <h1 class="section-title">
-        Nuestro Menú
+        {{ titleText }}
       </h1>
       <p class="section-subtitle">
-        Combina tu hamburguesa favorita con papas crujientes, salsas artesanales y postres helados.
+        {{ subtitleText }}
       </p>
     </header>
 
@@ -58,10 +58,10 @@
           class="card text-center"
         >
           <p class="text-lg font-semibold">
-            Aún no tenemos platos disponibles.
+            {{ emptyHeading }}
           </p>
           <p class="text-sm text-(--color-muted) mt-2">
-            Estamos actualizando la carta, vuelve en unos minutos.
+            {{ emptySub }}
           </p>
         </div>
 
@@ -70,7 +70,7 @@
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <DishCard
-            v-for="(dish, idx) in items"
+            v-for="(dish, idx) in filteredItems"
             :key="String((dish as Record<string, unknown>).id ?? (dish as Record<string, unknown>).slug ?? idx)"
             :dish="dish"
             @add="onAdd"
@@ -98,6 +98,12 @@ import { useCart } from '~/composables/useCart'
 import DishCard from './DishCard.vue'
 import { getMenu } from '../api/restaurantService'
 
+const props = defineProps({
+  onlyOffers: { type: Boolean, default: false },
+  title: { type: String, default: 'Nuestro Menú' },
+  subtitle: { type: String, default: 'Combina tu hamburguesa favorita con papas crujientes, salsas artesanales y postres helados.' }
+})
+
 const LIMIT = 9
 const TENANT = 'TENANT#BEMBOS'
 
@@ -107,7 +113,27 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 const placeholderCards = Array.from({ length: 6 }, (_, idx) => idx)
 
-const isEmpty = computed(() => !loading.value && !error.value && items.value.length === 0)
+const filteredItems = computed(() => {
+  if (!props.onlyOffers) return items.value
+  try {
+    return items.value.filter(d => {
+      const v = (d as Record<string, unknown>).offers
+      return v === true || v === 'true' || v === 1 || v === '1'
+    })
+  } catch (e) {
+    return items.value
+  }
+})
+
+
+const isEmpty = computed(() => !loading.value && !error.value && filteredItems.value.length === 0)
+
+const emptyHeading = computed(() => (props.onlyOffers ? 'Aún no hay ofertas disponibles.' : 'Aún no tenemos platos disponibles.'))
+const emptySub = computed(() => (props.onlyOffers ? 'Vuelve más tarde, por ahora no hay promociones.' : 'Estamos actualizando la carta, vuelve en unos minutos.'))
+
+const pillText = computed(() => (props.onlyOffers ? 'Ofertas' : 'Menú oficial'))
+const titleText = computed(() => props.title)
+const subtitleText = computed(() => props.subtitle)
 
 function extractItems(resp: unknown) {
   if (!resp) return { items: [], nextKey: null }
